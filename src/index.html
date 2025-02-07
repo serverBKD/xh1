@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: #c3c3c3;
+        font-size: 24px;
+
+
+        & main {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap-reverse;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+
+            & form#uploadForm {
+                width: 100%;
+                max-width: 520px;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                background-color: #a8a6a6;
+                color: #020202;
+                padding: .3rem .5rem;
+
+                & h1 {
+                    width: 100%;
+                    font-family: 'Arial Narrow Bold', Impact, sans-serif;
+                    font-size: 1.7rem;
+                    color: #0e0505;
+                    font-stretch: expanded;
+                    text-align: center;
+                    margin-bottom: .5rem;
+                }
+
+                & div {
+                    width: 100%;
+                    padding: .1rem 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 2px;
+
+                    & label {
+                        font-style: oblique;
+                        font-size: 24px;
+                        font-weight: 800;
+                        color: #b91313;
+                        margin-bottom: 12px;
+                    }
+
+                    & input {
+                        width: 100%;
+                        height: 32px;
+                        font-size: 24px;
+                    }
+
+                    & button {
+                        width: 50%;
+                        min-height: 48px;
+                        font-size: 24px;
+                        font-weight: 600;
+                        color: #c3c3c3;
+                        padding: 25px 14px;
+                        margin: 1rem auto;
+                        text-transform: uppercase;
+                        background-color: #1355b9;
+
+                        :hover {
+                            background-color: #13b92f;
+                        }
+                    }
+                }
+            }
+        }
+
+        #response {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: larger;
+            color: #db4c09;
+        }
+    }
+
+    .FormInput {
+        display: flex;
+        flex-direction: column;
+        gap: 10;
+
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>xhare</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <main>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <h1>Organizar imágenes</h1>
+            <div class="FormInput">
+                <label for="label">Etiqueta:</label>
+                <input type="text" id="label" name="label" required>
+            </div>
+            <br>
+            <div class="FormInput">
+                <label for="images">Imágenes:</label>
+                <input type="file" id="images" name="images" multiple required>
+            </div>
+            <div>
+                <button type="submit">guardar</button>
+            </div>
+        </form>
+        <div id="response"></div>
+    </main>
+
+    <script type="module">
+        const $ = (elem) => document.getElementById(elem)
+        const Form = $("uploadForm")
+        const Response = $('response')
+
+        Form.addEventListener('submit', async function (event) {
+            event?.preventDefault()
+
+            let formData = new FormData(this)
+
+            //TODO: Actualizar la direccion IP privada dinamicamente
+
+            await fetch('http://10.24.13.104:4000', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    Response.textContent = data.message
+                })
+                .catch(error => {
+                    console.error('Error:', error)
+                    Response.textContent = 'Error al subir las imágenes.'
+                })
+        })
+
+
+    </script>
+</body>
+
+</html>
