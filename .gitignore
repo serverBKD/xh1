@@ -1,4 +1,4 @@
 node_modules
 
 #archivos subidos
-./src/uploads
+src/uploads/
