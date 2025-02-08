@@ -1,5 +1,4 @@
 import express, { json } from "express"
-import multer from "multer"
 import MyIP from "./lib/ip.js"
 
 const myIP = MyIP()
@@ -20,11 +19,10 @@ app.use(cors(corsOptions))
 app.use(json())
 // Middleware para analizar application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }))
-const upload = multer({ dest: "uploads/" })
 
 //. Running APP
 app.listen(PORT, () => {
   console.log(`Server is running at: http://${myIP}:${PORT}`)
 })
 
-export { app, upload }
+export { app }

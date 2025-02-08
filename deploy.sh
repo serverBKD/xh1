@@ -16,7 +16,8 @@ echo "Introduce el mensaje del commit:"
 read commit_message
 commit_message="$fecha_actual: $commit_version: $commit_message"
 git commit -m "$commit_message"
-git push -ufv
+#git push -ufv
+git push main HEAD:master
 echo "commit --MAIN-- correct"
 sleep 1
 clear
